@@ -46,6 +46,11 @@ pipeline{
                 echo "Deploy the code to $PRODUCTION_ENVIRONMENT!"
             }
         }
+        stage("Completed"){
+            steps{
+                echo "Completed the process!"
+            }
+        }
     }
     post {
         success {
