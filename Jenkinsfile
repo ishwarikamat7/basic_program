@@ -46,10 +46,23 @@ pipeline{
                 echo "Deploy the code to $PRODUCTION_ENVIRONMENT!"
             }
         }
-        stage("Complete"){
-            steps{
-                echo "Completed!"
-            }
+    }
+    post {
+        success {
+            emailext (
+                subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
+                body: "The pipeline completed successfully. No issues detected.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+                to: "ishwarikmt7@gmail.com"
+            )
+        }
+        failure {
+            emailext (
+                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                body: "The pipeline failed. Please check the build logs for details.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+                to: "ishwarikmt7@gmail.com"
+            )
         }
     }
 }
